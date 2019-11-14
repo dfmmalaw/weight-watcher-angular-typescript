@@ -17,10 +17,7 @@ export class HomeComponent implements OnInit {
   constructor(public entriesSvc: WeightEntriesService) { }
 
   ngOnInit() {
-    // subscribing is what kicks off the http call in the service which returns an entries array which I am assigning to the entries property
-    this.entriesSvc.getEntries().subscribe(entries => {
-      this.entries = entries;
-    })
+    this.updateData();
   }
 
   // click event on button element invokes this method and ngIf structural directive hide/show associated element based on showbodyfat property defined at top of class.
@@ -28,8 +25,17 @@ export class HomeComponent implements OnInit {
     this.showBodyFat = !this.showBodyFat;
   }
 
+  updateData() {
+    // subscribing is what kicks off the http call in the service which returns an entries array which I am assigning to the entries property
+    this.entriesSvc.getEntries().subscribe(entries => {
+      this.entries = entries;
+    })
+  }
+
   // called when 'create' event is raised in new-weight-entry (child) component and it then invokes the addEntry method in the service
   createNewEntry(entry: Entry){
-    this.entriesSvc.addEntry(entry);
+    this.entriesSvc.addEntry(entry).subscribe(() => {
+      this.updateData();
+    });
   }
 }

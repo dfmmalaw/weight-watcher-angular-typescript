@@ -37,9 +37,9 @@ export class WeightEntriesService {
     )
   }
   
-
+  // this method allows us to modify data using a POST request
   addEntry(entry: Entry) {
-    
+    return this.http.post('/api/entries', entry);
   }
 
 }
