@@ -11,10 +11,16 @@ import { Entry } from '../model/entry';
 export class HomeComponent implements OnInit {
   // flag that controls visibility
   showBodyFat = true;
+  // property will hold the data when it comes back from the server
+  entries: Entry[];
 
   constructor(public entriesSvc: WeightEntriesService) { }
 
   ngOnInit() {
+    // subscribing is what kicks off the http call in the service which returns an entries array which I am assigning to the entries property
+    this.entriesSvc.getEntries().subscribe(entries => {
+      this.entries = entries;
+    })
   }
 
   // click event on button element invokes this method and ngIf structural directive hide/show associated element based on showbodyfat property defined at top of class.
