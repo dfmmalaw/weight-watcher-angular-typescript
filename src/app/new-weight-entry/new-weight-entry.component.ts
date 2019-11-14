@@ -19,8 +19,12 @@ export class NewWeightEntryComponent implements OnInit {
   }
 
   createEntry() {
+    let newEntry = Object.assign({}, this.model,{
+      bodyfat: this.model.bodyfat / 100,
+      date: new Date(this.model.date)
+    })
     // button click raises event here using output property's emit method and passes data to home component
-    this.create.emit({id:-1, date: new Date('1/15/1996'), weight:110, bodyfat:0.35});
+    this.create.emit(newEntry);
   }
 
   // need method to set model back to empty state and it is called everytime thhe component is initialized
